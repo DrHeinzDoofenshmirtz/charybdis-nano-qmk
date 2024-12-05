@@ -21,22 +21,30 @@
 
 enum custom_keycodes {
     MATT1 = SAFE_RANGE,
-    MATT2,
+    ST_LCTL,
+    ST_LSFT,
+    ST_LALT,
+    ST_LWIN,
 };
 
 enum charybdis_keymap_layers {
     LAYER_BASE = 0,
-    LAYER_LOWER,
-    LAYER_RAISE,
-    LAYER_NAVPLUS,
+    LAYER_NAVPLUS = 1,
+    LAYER_SYMBOLS = 2,
+    LAYER_NUMPAD = 3,
+    LAYER_ACTIONS = 4,
+    LAYER_FUNC = 5,
 };
 
-#define LOWER MO(LAYER_LOWER)
-#define RAISE MO(LAYER_RAISE)
+#define L_NAV LT(LAYER_NAVPLUS, KC_BSPC)
+#define L_SYM LT(LAYER_SYMBOLS, KC_SPACE)
+#define L_NUM LT(LAYER_NUMPAD, KC_DELETE)
+#define MO_FUNC MO(LAYER_FUNC)
+#define MO_ACT MO(LAYER_ACTIONS)
 
+#define _C(kc) MT(MOD_LCTL, kc)
 #define _S(kc) MT(MOD_LSFT, kc)
 #define _A(kc) MT(MOD_LALT, kc)
-#define _C(kc) MT(MOD_LCTL, kc)
 #define _W(kc) MT(MOD_LGUI, kc)
 
 #define CTL_BSP CTL_T(KC_BSPC)
@@ -47,50 +55,30 @@ enum charybdis_keymap_layers {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         LT_NAV, _S(KC_SPC),  LOWER,      KC_ENT,  _S(KC_SPC)
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L,   DK_AE,
+          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, DK_COMM,  DK_DOT, DK_MINS,
+                           L_NAV,   L_NUM, _______,    KC_LSFT,   L_SYM
   ),
 
   [LAYER_NAVPLUS] = LAYOUT(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_HOME, KC_END,  MATT1, DK_AA,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_LEFT, KC_DOWN, KC_UP,  KC_RIGHT, KC_SCLN,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         CTL_BSP, SFT_SPC,   LOWER,      KC_ENT, GUI_ENT
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+       _______, _______,   KC_F5,  KC_F12,LCTL(KC_F12),   _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
+       ST_LWIN, ST_LALT, ST_LSFT, ST_LCTL, MO_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
+       _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
+                         _______, _______, _______,        KC_ENT,  MO_ACT
   ),
-  [LAYER_LOWER] = LAYOUT(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       RGB_TOG, KC_MNXT, KC_MPLY, KC_MPRV, XXXXXXX,    KC_LBRC,    KC_7,    KC_8,    KC_9, KC_RBRC,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX,    KC_PPLS,    KC_4,    KC_5,    KC_6, KC_PMNS,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       XXXXXXX, XXXXXXX, XXXXXXX,  EE_CLR, QK_BOOT,    KC_PAST,    KC_1,    KC_2,    KC_3, KC_PSLS,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         XXXXXXX, XXXXXXX, _______,    XXXXXXX, _______
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+  [LAYER_SYMBOLS] = LAYOUT(
+       DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_QUOT, DK_ACUT,  DK_GRV, DK_CIRC,
+        DK_DLR,   DK_AT, DK_EXLM, DK_QUES, DK_LPRN,    DK_RPRN, DK_DQUO, DK_ASTR, DK_HASH, DK_TILD,
+       DK_PERC, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_EURO, DK_HALF, DK_DIAE,
+                          MO_ACT, _______, _______,    _______, _______
   ),
 
-  [LAYER_RAISE] = LAYOUT(
-  // ╭─────────────────────────────────────────────╮ ╭─────────────────────────────────────────────╮
-       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_VOLU, KC_MUTE, KC_VOLD, XXXXXXX,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_LEFT,   KC_UP, KC_DOWN, KC_RGHT, XXXXXXX,    XXXXXXX, KC_RSFT, KC_RCTL, KC_RALT, KC_RGUI,
-  // ├─────────────────────────────────────────────┤ ├─────────────────────────────────────────────┤
-       KC_HOME, KC_PGUP, KC_PGDN,  KC_END, XXXXXXX,    QK_BOOT,  EE_CLR, XXXXXXX, XXXXXXX, XXXXXXX,
-  // ╰─────────────────────────────────────────────┤ ├─────────────────────────────────────────────╯
-                         _______, _______, XXXXXXX,    _______, XXXXXXX
-  //                   ╰───────────────────────────╯ ╰──────────────────╯
+  [LAYER_NUMPAD] = LAYOUT(
+       _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
+       KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, _______,    _______,    KC_4,    KC_5,    KC_6, _______,
+       _______, _______, _______,LALT(KC_V), _______,  QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
+                         _______, _______, _______,       KC_Q,    KC_0
   ),
 };
 // clang-format on
@@ -118,7 +106,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_DOWN:
     case KC_LEFT:
     case KC_RIGHT:
-    case KC_W:
         if (pressed)  {
             key_held = true;
             repeat_interval = 100;
