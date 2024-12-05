@@ -21,10 +21,6 @@
 
 enum custom_keycodes {
     MATT1 = SAFE_RANGE,
-    ST_LCTL,
-    ST_LSFT,
-    ST_LALT,
-    ST_LWIN,
 };
 
 enum charybdis_keymap_layers {
@@ -47,10 +43,16 @@ enum charybdis_keymap_layers {
 #define _A(kc) MT(MOD_LALT, kc)
 #define _W(kc) MT(MOD_LGUI, kc)
 
+#define ST_LCTL OSM(MOD_LCTL)
+#define ST_LSFT OSM(MOD_LSFT)
+#define ST_LALT OSM(MOD_LALT)
+#define ST_LGUI OSM(MOD_LGUI)
+
 #define CTL_BSP CTL_T(KC_BSPC)
 #define LT_NAV LT(LAYER_NAVPLUS, KC_BSPC)
 #define SFT_SPC SFT_T(KC_SPC)
 #define GUI_ENT GUI_T(KC_ENT)
+
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -63,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_NAVPLUS] = LAYOUT(
        _______, _______,   KC_F5,  KC_F12,LCTL(KC_F12),   _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
-       ST_LWIN, ST_LALT, ST_LSFT, ST_LCTL, MO_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
+       ST_LGUI, ST_LALT, ST_LSFT, ST_LCTL, MO_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
                          _______, _______, _______,        KC_ENT,  MO_ACT
   ),
@@ -82,6 +84,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 // clang-format on
+
+const uint16_t PROGMEM tab_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM esc_combo[] = {KC_C, KC_V, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(tab_combo, KC_TAB),
+    COMBO(esc_combo, KC_ESC), // keycodes with modifiers are possible too!
+};
 
 static uint16_t key_timer;
 static bool key_held = false;
@@ -108,7 +118,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KC_RIGHT:
         if (pressed)  {
             key_held = true;
-            repeat_interval = 100;
+            repeat_interval = 150;
             keycode_held = keycode;
             key_timer = timer_read(); // Start the timer when the key is pressed
             tap_code(keycode);        // Tap the key once immediately
