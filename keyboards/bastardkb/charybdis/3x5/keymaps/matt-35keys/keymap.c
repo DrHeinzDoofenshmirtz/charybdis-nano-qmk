@@ -30,13 +30,15 @@ enum charybdis_keymap_layers {
     LAYER_NUMPAD = 3,
     LAYER_ACTIONS = 4,
     LAYER_FUNC = 5,
+    LAYER_MOUSE = 6,
 };
 
 #define L_NAV LT(LAYER_NAVPLUS, KC_BSPC)
 #define L_SYM LT(LAYER_SYMBOLS, KC_SPACE)
 #define L_NUM LT(LAYER_NUMPAD, KC_DELETE)
-#define MO_FUNC MO(LAYER_FUNC)
-#define MO_ACT MO(LAYER_ACTIONS)
+#define L_FUNC MO(LAYER_FUNC)
+#define L_ACT MO(LAYER_ACTIONS)
+#define L_MOUSE MO(LAYER_MOUSE)
 
 #define _C(kc) MT(MOD_LCTL, kc)
 #define _S(kc) MT(MOD_LSFT, kc)
@@ -48,32 +50,34 @@ enum charybdis_keymap_layers {
 #define ST_LALT OSM(MOD_LALT)
 #define ST_LGUI OSM(MOD_LGUI)
 
-#define CTL_BSP CTL_T(KC_BSPC)
-#define LT_NAV LT(LAYER_NAVPLUS, KC_BSPC)
-#define SFT_SPC SFT_T(KC_SPC)
-#define GUI_ENT GUI_T(KC_ENT)
+//#define CTL_BSP CTL_T(KC_BSPC)
+//#define LT_NAV LT(LAYER_NAVPLUS, KC_BSPC)
+//#define SFT_SPC SFT_T(KC_SPC)
+//#define GUI_ENT GUI_T(KC_ENT)
+
 
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
   [LAYER_BASE] = LAYOUT(
           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
           KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L,   DK_AE,
           KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, DK_COMM,  DK_DOT, DK_MINS,
-                           L_NAV,   L_NUM, _______,    KC_LSFT,   L_SYM
+                           L_NAV,   L_NUM, L_MOUSE,    KC_LSFT,   L_SYM
   ),
 
   [LAYER_NAVPLUS] = LAYOUT(
        _______, _______,   KC_F5,  KC_F12,LCTL(KC_F12),   _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
-       ST_LGUI, ST_LALT, ST_LSFT, ST_LCTL, MO_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
+       ST_LGUI, ST_LALT, ST_LSFT, ST_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        KC_ENT,  MO_ACT
+                         _______, _______, _______,        KC_ENT,   L_ACT
   ),
   [LAYER_SYMBOLS] = LAYOUT(
        DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_QUOT, DK_ACUT,  DK_GRV, DK_CIRC,
         DK_DLR,   DK_AT, DK_EXLM, DK_QUES, DK_LPRN,    DK_RPRN, DK_DQUO, DK_ASTR, DK_HASH, DK_TILD,
        DK_PERC, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_EURO, DK_HALF, DK_DIAE,
-                          MO_ACT, _______, _______,    _______, _______
+                           L_ACT, _______, _______,    _______, _______
   ),
 
   [LAYER_NUMPAD] = LAYOUT(
@@ -82,27 +86,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______, _______,LALT(KC_V), _______,  QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
                          _______, _______, _______,       KC_Q,    KC_0
   ),
+
+  [LAYER_ACTIONS] = LAYOUT(
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______,    _______, _______, _______, QK_BOOT, _______,
+                         _______, _______, _______,    _______, _______
+  ),
+
+  [LAYER_FUNC] = LAYOUT(
+       _______, _______, _______, _______, _______,    _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10,
+       _______, _______, _______, _______, _______,    _______,   KC_F4,   KC_F5,   KC_F6,  KC_F11,
+       _______, _______, _______, _______, _______,    _______,   KC_F1,   KC_F2,   KC_F3,  KC_F12,
+                         _______, _______, _______,    _______, _______
+  ),
+
+  [LAYER_MOUSE] = LAYOUT(
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
+       _______, MS_BTN3, MS_BTN2, MS_BTN1, _______,    _______, MS_BTN1, MS_BTN2, MS_BTN3, _______,
+       _______, _______, _______, _______, _______,    MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______,
+                         _______, _______, _______,    _______, _______
+  ),
+
 };
 // clang-format on
 
+//-- COMBOS BEGIN --//
 const uint16_t PROGMEM tab_combo[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_C, KC_V, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(tab_combo, KC_TAB),
-    COMBO(esc_combo, KC_ESC), // keycodes with modifiers are possible too!
+    COMBO(esc_combo, KC_ESC),
+};
+//-- COMBOS END --//
+
+//-- REPEAT BEGIN -
+struct repeat_key {
+    uint16_t key_time;
+    bool key_held;
+    int repeat_interval;
+    uint16_t keycode_held;
 };
 
-static uint16_t key_timer;
-static bool key_held = false;
-static int repeat_interval = 0;
-static uint16_t keycode_held = 0;
+static struct repeat_key arrow_repeat;
+const int ARROW_REPEAT_INTERVAL_INITIAL = 150;
+const int ARROW_REPEAT_INTERVAL_REPEATING = 40;
 
-
-// handle_keys is called every time a key is pressed/released/event
+// process_record_user is called every time a key is pressed/released/event
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   bool pressed = record->event.pressed == true;
   //bool released = record->event.pressed == false;
+
   switch (keycode) {
 
     case MATT1:
@@ -112,18 +147,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code(KC_J);
       }
       return false;
+
     case KC_UP:
     case KC_DOWN:
     case KC_LEFT:
     case KC_RIGHT:
         if (pressed)  {
-            key_held = true;
-            repeat_interval = 150;
-            keycode_held = keycode;
-            key_timer = timer_read(); // Start the timer when the key is pressed
-            tap_code(keycode);        // Tap the key once immediately
+            arrow_repeat.key_held = true;          // Key pressed, start repeating
+            arrow_repeat.repeat_interval = ARROW_REPEAT_INTERVAL_INITIAL;    // In milliseconds
+            arrow_repeat.keycode_held = keycode;   // Cache the key that was pressed
+            arrow_repeat.key_time = timer_read(); // Read the current time
+            tap_code(keycode);                     // Tap the key
         } else {
-            key_held = false;          // Key released, stop repeating
+            arrow_repeat.key_held = false;          // Key released, stop repeating
         }
         return false;
   }
@@ -134,9 +170,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // This method is looped through constantly
 void matrix_scan_user(void) {
     // fast repeat when holding down arrows
-    if (key_held && timer_elapsed(key_timer) > repeat_interval) { // check if the key is still held after 200ms
-        tap_code(keycode_held);                             // send the key again
-        key_timer = timer_read();                    // reset the timer
-        repeat_interval = 50;
+    if (arrow_repeat.key_held && timer_elapsed(arrow_repeat.key_time) > arrow_repeat.repeat_interval) { // check if the key is still held
+        tap_code(arrow_repeat.keycode_held);                     // send the key again
+        arrow_repeat.key_time = timer_read();                   // reset the timer
+        arrow_repeat.repeat_interval = ARROW_REPEAT_INTERVAL_REPEATING;
     }
 }
