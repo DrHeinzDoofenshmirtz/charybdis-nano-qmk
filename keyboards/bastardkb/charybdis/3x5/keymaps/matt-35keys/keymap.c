@@ -34,16 +34,19 @@ enum charybdis_keymap_layers {
 };
 
 #define L_NAV LT(LAYER_NAVPLUS, KC_BSPC)
-#define L_SYM LT(LAYER_SYMBOLS, KC_SPACE)
-#define L_NUM LT(LAYER_NUMPAD, KC_DELETE)
+#define L_SYM LT(LAYER_SYMBOLS, KC_DEL)
+#define L_NUM LT(LAYER_NUMPAD, KC_SPC)
 #define L_FUNC MO(LAYER_FUNC)
 #define L_ACT MO(LAYER_ACTIONS)
-#define L_MOUSE MO(LAYER_MOUSE)
+#define L_MOUSE MT(LAYER_MOUSE, KC_TAB)
 
-#define _C(kc) MT(MOD_LCTL, kc)
-#define _S(kc) MT(MOD_LSFT, kc)
+#define _LC(kc) MT(MOD_LCTL, kc)
+#define _RC(kc) MT(MOD_RCTL, kc)
+#define _LS(kc) MT(MOD_LSFT, kc)
+#define _RS(kc) MT(MOD_RSFT, kc)
 #define _A(kc) MT(MOD_LALT, kc)
-#define _W(kc) MT(MOD_LGUI, kc)
+#define _LW(kc) MT(MOD_LGUI, kc)
+#define _RW(kc) MT(MOD_RGUI, kc)
 
 #define ST_LCTL OSM(MOD_LCTL)
 #define ST_LSFT OSM(MOD_LSFT)
@@ -61,30 +64,30 @@ enum charybdis_keymap_layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = LAYOUT(
-          KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,
-          KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L,   DK_AE,
-          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M, DK_COMM,  DK_DOT, DK_MINS,
-                           L_NAV,   L_NUM, L_MOUSE,    KC_LSFT,   L_SYM
+            KC_Q,     KC_W,      KC_E,      KC_R,      KC_T,          KC_Y,      KC_U,      KC_I,      KC_O,       KC_P,
+       _LW(KC_A), _A(KC_S), _LS(KC_D), _LC(KC_F),      KC_G,          KC_H, _RC(KC_J), _RS(KC_K),  _A(KC_L), _RW(DK_AE),
+            KC_Z,     KC_X,      KC_C,      KC_V,      KC_B,          KC_N,      KC_M,   DK_COMM,    DK_DOT,    DK_MINS,
+                                L_NAV,     L_NUM,   L_MOUSE,       KC_LSFT,     L_SYM
   ),
 
   [LAYER_NAVPLUS] = LAYOUT(
-       _______, _______,   KC_F5,  KC_F12,LCTL(KC_F12),   _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
-       ST_LGUI, ST_LALT, ST_LSFT, ST_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT, _______,
+       _______, _______,   KC_F5,  KC_F12,_LC(KC_F12),    _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
+       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        KC_ENT,   L_ACT
+                         _______, _______, _______,        KC_ENT,  KC_DEL
   ),
   [LAYER_SYMBOLS] = LAYOUT(
        DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_QUOT, DK_ACUT,  DK_GRV, DK_CIRC,
         DK_DLR,   DK_AT, DK_EXLM, DK_QUES, DK_LPRN,    DK_RPRN, DK_DQUO, DK_ASTR, DK_HASH, DK_TILD,
        DK_PERC, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_EURO, DK_HALF, DK_DIAE,
-                           L_ACT, _______, _______,    _______, _______
+                         KC_BSPC,  KC_SPC, _______,    _______, _______
   ),
 
   [LAYER_NUMPAD] = LAYOUT(
        _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
        KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, _______,    _______,    KC_4,    KC_5,    KC_6, _______,
-       _______, _______, _______,LALT(KC_V), _______,  QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
-                         _______, _______, _______,       KC_Q,    KC_0
+       _______, _______, _______, _______, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
+                         _______, _______, _______,    _______,    KC_0
   ),
 
   [LAYER_ACTIONS] = LAYOUT(
@@ -112,16 +115,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 //-- COMBOS BEGIN --//
-const uint16_t PROGMEM tab_combo[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM esc_combo[] = {KC_C, KC_V, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(tab_combo, KC_TAB),
     COMBO(esc_combo, KC_ESC),
 };
 //-- COMBOS END --//
 
-//-- REPEAT BEGIN -
+//-- REPEAT BEGIN --//
 struct repeat_key {
     uint16_t key_time;
     bool key_held;
@@ -132,6 +133,30 @@ struct repeat_key {
 static struct repeat_key arrow_repeat;
 const int ARROW_REPEAT_INTERVAL_INITIAL = 150;
 const int ARROW_REPEAT_INTERVAL_REPEATING = 40;
+//-- REPEAT END --//
+
+bool nullify_check(bool pressed, int tapCount, uint16_t mod_keycode_to_check, uint16_t keycode_instead_1, uint16_t keycode_instead_2) {
+
+    /*
+        This piece of code nullifies the effect of Left Shift when
+        tapping the LCTL_T(KC_T) key.
+        This helps rolling over LSFT_T(KC_S) and LCTL_T(KC_T)
+        to obtain the intended "st" instead of "T".
+        Consequently, capital T can only be obtained by tapping LCTL_T(KC_T)
+        and holding RSFT_T(KC_E) (which is the right Shift mod tap).
+    */
+
+    if (pressed && tapCount > 0) {
+        if (get_mods() & MOD_BIT(mod_keycode_to_check)) {
+            unregister_mods(MOD_BIT(mod_keycode_to_check));
+            tap_code(keycode_instead_1);
+            tap_code(keycode_instead_2);
+            return false;
+        }
+    }
+
+    return true;
+}
 
 // process_record_user is called every time a key is pressed/released/event
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -162,6 +187,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             arrow_repeat.key_held = false;          // Key released, stop repeating
         }
         return false;
+    case KC_R:
+        return nullify_check(record->event.pressed, record->tap.count, KC_LGUI, KC_A, KC_R);
+    case L_NUM:
+        return nullify_check(record->event.pressed, record->tap.count, DK_COMM, DK_COMM, KC_SPC);
+        ?
   }
 
   return true;
@@ -176,3 +206,10 @@ void matrix_scan_user(void) {
         arrow_repeat.repeat_interval = ARROW_REPEAT_INTERVAL_REPEATING;
     }
 }
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  state = update_tri_layer_state(state, LAYER_NAVPLUS, LAYER_SYMBOLS, LAYER_ACTIONS);
+  return state;
+}
+
