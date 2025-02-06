@@ -38,7 +38,20 @@ enum charybdis_keymap_layers {
 #define L_NUM LT(LAYER_NUMPAD, KC_SPC)
 #define L_FUNC MO(LAYER_FUNC)
 #define L_ACT MO(LAYER_ACTIONS)
-#define L_MOUSE LT(LAYER_MOUSE, KC_TAB)
+#define L_MOUSE MO(LAYER_MOUSE)
+
+#define L_SYM2 LT(LAYER_SYMBOLS, KC_ENT)
+#define L_NAV2 LT(LAYER_NAVPLUS, KC_BSPC)
+#define LT_FUNC MO(LAYER_FUNC)
+
+#define HOME_J _RC(KC_J)
+#define HOME_K _RS(KC_K)
+#define HOME_L _A(KC_L)
+#define HOME_AE _RW(DK_AE)
+#define HOME_F _LC(KC_F)
+#define HOME_D _LS(KC_D)
+#define HOME_S _A(KC_S)
+#define HOME_A _LW(KC_A)
 
 #define _LC(kc) MT(MOD_LCTL, kc)
 #define _RC(kc) MT(MOD_RCTL, kc)
@@ -63,28 +76,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_BASE] = MATTHIAS_SPLIT_35(
             KC_Q,     KC_W,      KC_E,      KC_R,      KC_T,          KC_Y,      KC_U,      KC_I,      KC_O,       KC_P,
-       _LW(KC_A), _A(KC_S), _LS(KC_D), _LC(KC_F),      KC_G,          KC_H, _RC(KC_J), _RS(KC_K),  _A(KC_L), _RW(DK_AE),
+          HOME_A,   HOME_S,    HOME_D,    HOME_F,      KC_G,          KC_H,    HOME_J,    HOME_K,    HOME_L,    HOME_AE,
             KC_Z,     KC_X,      KC_C,      KC_V,      KC_B,          KC_N,      KC_M,   DK_COMM,    DK_DOT,    DK_MINS,
                                 L_NAV,     L_NUM,   L_MOUSE,         L_SYM,   KC_LSFT
   ),
 
   [LAYER_NAVPLUS] = MATTHIAS_SPLIT_35(
        _______, _______,   KC_F5,  KC_F12,_LC(KC_F12),    _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
-       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______,
+       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, DK_ARNG,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        KC_ENT,  KC_DEL
+                         _______, _______, _______,        L_SYM2,  KC_DEL
   ),
 
   [LAYER_SYMBOLS] = MATTHIAS_SPLIT_35(
        DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_QUOT, DK_ACUT,  DK_GRV, DK_CIRC,
         DK_DLR,   DK_AT, DK_EXLM, DK_QUES, DK_LPRN,    DK_RPRN, DK_DQUO, DK_ASTR, DK_HASH, DK_TILD,
        DK_PERC, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_EURO, DK_HALF, DK_DIAE,
-                         KC_BSPC,  KC_SPC, _______,    _______, _______
+                           L_NAV2,  KC_SPC, _______,    _______, _______
   ),
 
   [LAYER_NUMPAD] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
-       KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, _______,    _______,    KC_4,    KC_5,    KC_6, _______,
+       KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, LT_FUNC,    _______,    KC_4,    KC_5,    KC_6, _______,
        _______, _______, _______, _______, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
                          _______, _______, _______,    _______,    KC_0
   ),
@@ -92,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_ACTIONS] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______,    _______, _______, _______, QK_BOOT, _______,
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, QK_BOOT,
                          _______, _______, _______,    _______, _______
   ),
 
@@ -115,9 +128,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 //-- COMBOS BEGIN --//
 const uint16_t PROGMEM esc_combo[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM tab_combo[] = {KC_M, DK_COMM, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(esc_combo, KC_ESC),
+    COMBO(tab_combo, KC_TAB),
 };
 //-- COMBOS END --//
 
@@ -209,5 +224,6 @@ void matrix_scan_user(void) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     state = update_tri_layer_state(state, LAYER_NAVPLUS, LAYER_SYMBOLS, LAYER_ACTIONS);
+    // state = update_tri_layer_state(state, LAYER_NUMPAD, LAYER_FUNC, );
     return state;
 }
