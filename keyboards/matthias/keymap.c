@@ -129,9 +129,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //-- COMBOS BEGIN --//
 const uint16_t PROGMEM esc_combo[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM tab_combo[] = {KC_M, DK_COMM, COMBO_END};
+const uint16_t PROGMEM gui_combo[] = {HOME_F, KC_G, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(esc_combo, KC_ESC),
+    COMBO(gui_combo, KC_LGUI),
     COMBO(tab_combo, KC_TAB),
 };
 //-- COMBOS END --//
@@ -214,7 +216,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // This method is looped through constantly
 void matrix_scan_user(void) {
-    // fast repeat when holding down arrows
+    // fast repeat when holding down arrow keys
     if (arrow_repeat.key_held && timer_elapsed(arrow_repeat.key_time) > arrow_repeat.repeat_interval) { // check if the key is still held
         tap_code(arrow_repeat.keycode_held);                                                            // send the key again
         arrow_repeat.key_time        = timer_read();                                                    // reset the timer
