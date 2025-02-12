@@ -26,8 +26,8 @@ enum custom_keycodes {
 enum charybdis_keymap_layers {
     LAYER_BASE    = 0,
     LAYER_NAVPLUS = 1,
-    LAYER_SYMBOLS = 2,
-    LAYER_NUMPAD  = 3,
+    LAYER_NUMPAD  = 2,
+    LAYER_SYMBOLS = 3,
     LAYER_ACTIONS = 4,
     LAYER_FUNC    = 5,
     LAYER_MOUSE   = 6,
@@ -88,18 +88,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          _______, _______, _______,        L_SYM2,  KC_DEL
   ),
 
-  [LAYER_SYMBOLS] = MATTHIAS_SPLIT_35(
-       DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_QUOT, DK_ACUT,  DK_GRV, DK_CIRC,
-        DK_DLR,   DK_AT, DK_EXLM, DK_QUES, DK_LPRN,    DK_RPRN, DK_DQUO, DK_ASTR, DK_HASH, DK_TILD,
-       DK_PERC, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_EURO, DK_HALF, DK_DIAE,
-                           L_NAV2,  KC_SPC, _______,    _______, _______
-  ),
-
   [LAYER_NUMPAD] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
        KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, LT_FUNC,    _______,    KC_4,    KC_5,    KC_6, _______,
        _______, _______, _______, _______, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
                          _______, _______, _______,    _______,    KC_0
+  ),
+
+  [LAYER_SYMBOLS] = MATTHIAS_SPLIT_35(
+       DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_EXLM, DK_ACUT,  DK_GRV, DK_CIRC,
+        DK_DLR,   DK_AT, DK_QUOT, DK_DQUO, DK_LPRN,    DK_RPRN, DK_ASTR, DK_HASH, DK_QUES, DK_TILD,
+       DK_EURO, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_PERC, DK_HALF, DK_DIAE,
+                           L_NAV2,  KC_SPC, _______,    _______, _______
   ),
 
   [LAYER_ACTIONS] = MATTHIAS_SPLIT_35(
