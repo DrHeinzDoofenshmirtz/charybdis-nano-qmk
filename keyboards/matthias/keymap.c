@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +14,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+/*
+
+Commands to flash keyboard:
+
+Navigate to repo:
+cd "M:\Code Projects\charybdis-nano-qmk"
+
+Flash keyboard with this layout:
+qmk flash -kb bastardkb/charybdis/3x5 -km matt-35keys
+
+Compile:
+qmk compile [same parameters as 'qmk flash']
+
+*/
 
 #include QMK_KEYBOARD_H
 
@@ -85,7 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______,   KC_F5,  KC_F12,_LC(KC_F12),    _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, DK_ARNG,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        L_SYM2,  KC_DEL
+                         _______, _______, _______,        KC_DEL,  L_SYM2
   ),
 
   [LAYER_NUMPAD] = MATTHIAS_SPLIT_35(
