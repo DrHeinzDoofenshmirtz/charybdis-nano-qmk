@@ -36,6 +36,7 @@ qmk compile [same parameters as 'qmk flash']
 
 enum custom_keycodes {
     MATT1 = SAFE_RANGE,
+    MATT2 = SAFE_RANGE + 1,
 };
 
 enum charybdis_keymap_layers {
@@ -43,21 +44,22 @@ enum charybdis_keymap_layers {
     LAYER_NAVPLUS = 1,
     LAYER_NUMPAD  = 2,
     LAYER_SYMBOLS = 3,
-    LAYER_ACTIONS = 4,
+    LAYER_MOUSE   = 4,
     LAYER_FUNC    = 5,
-    LAYER_MOUSE   = 6,
+    LAYER_ACTIONS = 6,
+    LAYER_FUNCPLUS = 7,
 };
 
 #define L_NAV LT(LAYER_NAVPLUS, KC_BSPC)
-#define L_SYM LT(LAYER_SYMBOLS, KC_DEL)
 #define L_NUM LT(LAYER_NUMPAD, KC_SPC)
+#define L_SYM LT(LAYER_SYMBOLS, KC_DEL)
+#define L_MOUSE MO(LAYER_MOUSE)
 #define L_FUNC MO(LAYER_FUNC)
 #define L_ACT MO(LAYER_ACTIONS)
-#define L_MOUSE MO(LAYER_MOUSE)
+#define L_FUNCP MO(LAYER_FUNCPLUS)
 
-#define L_SYM2 LT(LAYER_SYMBOLS, KC_ENT)
-#define L_NAV2 LT(LAYER_NAVPLUS, KC_BSPC)
-#define LT_FUNC MO(LAYER_FUNC)
+#define L_SYM2 MO(LAYER_SYMBOLS)
+#define L_MOUS2 MO(LAYER_MOUSE)
 
 #define HOME_J _RC(KC_J)
 #define HOME_K _RS(KC_K)
@@ -98,15 +100,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [LAYER_NAVPLUS] = MATTHIAS_SPLIT_35(
        _______, _______,   KC_F5,  KC_F12,_LC(KC_F12),    _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
-       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, DK_ARNG,
+       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, _______,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, DK_ARNG,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        KC_DEL,  L_SYM2
+                         _______, _______, _______,        KC_DEL,  KC_ENT
   ),
 
   [LAYER_NUMPAD] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
-       KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL, LT_FUNC,    _______,    KC_4,    KC_5,    KC_6, _______,
-       _______, _______, _______, _______, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
+       KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,    _______,    KC_4,    KC_5,    KC_6, _______,
+       _______, _______, _______, L_FUNCP, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
                          _______, _______, _______,    _______,    KC_0
   ),
 
@@ -114,14 +116,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_EXLM, DK_ACUT,  DK_GRV, DK_CIRC,
         DK_DLR,   DK_AT, DK_QUOT, DK_DQUO, DK_LPRN,    DK_RPRN, DK_ASTR, DK_HASH, DK_QUES, DK_TILD,
        DK_EURO, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_PERC, DK_HALF, DK_DIAE,
-                           L_NAV2,  KC_SPC, _______,    _______, _______
+                         _______,  KC_SPC, L_MOUS2,    _______, _______
   ),
 
-  [LAYER_ACTIONS] = MATTHIAS_SPLIT_35(
+  [LAYER_MOUSE] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______,    _______, _______, _______, _______, QK_BOOT,
-                         _______, _______, _______,    _______, _______
+       _______, MS_BTN3, MS_BTN2, MS_BTN1, _______,    _______, MS_BTN1, MS_BTN2, MS_BTN3, _______,
+       _______, _______, _______, _______, _______,    MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______,
+                         _______, _______, _______,     L_SYM2, _______
   ),
 
   [LAYER_FUNC] = MATTHIAS_SPLIT_35(
@@ -131,13 +133,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                          _______, _______, _______,    _______, _______
   ),
 
-  [LAYER_MOUSE] = MATTHIAS_SPLIT_35(
+  [LAYER_ACTIONS] = MATTHIAS_SPLIT_35(
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
-       _______, MS_BTN3, MS_BTN2, MS_BTN1, _______,    _______, MS_BTN1, MS_BTN2, MS_BTN3, _______,
-       _______, _______, _______, _______, _______,    MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______,
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
+       _______, _______, _______, _______, _______,    _______, _______, _______, _______, QK_BOOT,
                          _______, _______, _______,    _______, _______
   ),
 
+  [LAYER_FUNCPLUS] = MATTHIAS_SPLIT_35(
+       _______, _______, _______, _______, _______,    _______,  KC_F21,  KC_F22,  KC_F23, _______,
+       _______, _______, _______, _______, _______,    _______,  KC_F18,  KC_F19,  KC_F20, _______,
+       _______, _______, _______, _______, _______,    _______,  KC_F15,  KC_F16,  KC_F17, _______,
+                         _______, _______, _______,    _______,  KC_F24
+  ),
 };
 // clang-format on
 
@@ -164,6 +172,7 @@ struct repeat_key {
 static struct repeat_key arrow_repeat;
 const int                ARROW_REPEAT_INTERVAL_INITIAL   = 150;
 const int                ARROW_REPEAT_INTERVAL_REPEATING = 40;
+
 //-- REPEAT END --//
 
 bool nullify_check(bool pressed, int tapCount, uint8_t mod_keycode_to_check, uint16_t keycode_instead_1, uint16_t keycode_instead_2) {
@@ -193,7 +202,7 @@ bool nullify_check(bool pressed, int tapCount, uint8_t mod_keycode_to_check, uin
 // process_record_user is called every time a key is pressed/released/event
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     bool pressed = record->event.pressed == true;
-    // bool released = record->event.pressed == false;
+    bool released = record->event.pressed == false;
 
     switch (keycode) {
         case MATT1:
@@ -240,7 +249,7 @@ void matrix_scan_user(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    state = update_tri_layer_state(state, LAYER_NAVPLUS, LAYER_SYMBOLS, LAYER_ACTIONS);
+    state = update_tri_layer_state(state, LAYER_MOUSE, LAYER_SYMBOLS, LAYER_ACTIONS);
     // state = update_tri_layer_state(state, LAYER_NUMPAD, LAYER_FUNC, );
     return state;
 }
