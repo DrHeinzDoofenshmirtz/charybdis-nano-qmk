@@ -91,60 +91,60 @@ enum charybdis_keymap_layers {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [LAYER_BASE] = MATTHIAS_SPLIT_35(
+  [LAYER_BASE] = MATTHIAS_SPLIT_36(
             KC_Q,     KC_W,      KC_E,      KC_R,      KC_T,          KC_Y,      KC_U,      KC_I,      KC_O,       KC_P,
           HOME_A,   HOME_S,    HOME_D,    HOME_F,      KC_G,          KC_H,    HOME_J,    HOME_K,    HOME_L,    HOME_AE,
             KC_Z,     KC_X,      KC_C,      KC_V,      KC_B,          KC_N,      KC_M,   DK_COMM,    DK_DOT,    DK_MINS,
-                                L_NAV,     L_NUM,   L_MOUSE,         L_SYM,   KC_LSFT
+                                L_NAV,     L_NUM,   L_MOUSE,         L_SYM,   KC_LSFT,   _______
   ),
 
-  [LAYER_NAVPLUS] = MATTHIAS_SPLIT_35(
+  [LAYER_NAVPLUS] = MATTHIAS_SPLIT_36(
        _______, _______,   KC_F5,  KC_F12,_LC(KC_F12),    _______, KC_HOME,  KC_END, DK_OSTR, DK_ARNG,
        KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, _______,       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, DK_ARNG,
        _______, _______, _______, _______, _______,       DK_BSLS, DK_SLSH, DK_SCLN, DK_COLN, DK_UNDS,
-                         _______, _______, _______,        KC_DEL,  KC_ENT
+                         _______, _______, _______,        KC_DEL,  KC_ENT, _______
   ),
 
-  [LAYER_NUMPAD] = MATTHIAS_SPLIT_35(
+  [LAYER_NUMPAD] = MATTHIAS_SPLIT_36(
        _______, _______, _______, _______, _______,    _______,    KC_7,    KC_8,    KC_9, _______,
        KC_LWIN, KC_LALT, KC_LSFT, KC_LCTL,  L_FUNC,    _______,    KC_4,    KC_5,    KC_6, _______,
        _______, _______, _______, L_FUNCP, _______,    QK_BOOT,    KC_1,    KC_2,    KC_3, _______,
-                         _______, _______, _______,    _______,    KC_0
+                         _______, _______, _______,    _______,    KC_0, _______
   ),
 
-  [LAYER_SYMBOLS] = MATTHIAS_SPLIT_35(
+  [LAYER_SYMBOLS] = MATTHIAS_SPLIT_36(
        DK_CURR, _______,  DK_EQL, DK_PLUS, DK_LABK,    DK_RABK, DK_EXLM, DK_ACUT,  DK_GRV, DK_CIRC,
         DK_DLR,   DK_AT, DK_QUOT, DK_DQUO, DK_LPRN,    DK_RPRN, DK_ASTR, DK_HASH, DK_QUES, DK_TILD,
        DK_EURO, DK_PIPE, DK_AMPR, DK_LCBR, DK_LBRC,    DK_RBRC, DK_RCBR, DK_PERC, DK_HALF, DK_DIAE,
-                         _______,  KC_SPC, L_MOUS2,    _______, _______
+                         _______,  KC_SPC, L_MOUS2,    _______, _______, _______
   ),
 
-  [LAYER_MOUSE] = MATTHIAS_SPLIT_35(
+  [LAYER_MOUSE] = MATTHIAS_SPLIT_36(
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
        _______, MS_BTN3, MS_BTN2, MS_BTN1, _______,    _______, MS_BTN1, MS_BTN2, MS_BTN3, _______,
        _______, _______, _______, _______, _______,    MS_WHLL, MS_WHLD, MS_WHLU, MS_WHLR, _______,
-                         _______, _______, _______,     L_SYM2, _______
+                         _______, _______, _______,     L_SYM2, _______, _______
   ),
 
-  [LAYER_FUNC] = MATTHIAS_SPLIT_35(
+  [LAYER_FUNC] = MATTHIAS_SPLIT_36(
        _______, _______, _______, _______, _______,    _______,   KC_F7,   KC_F8,   KC_F9,  KC_F10,
        _______, _______, _______, _______, _______,    _______,   KC_F4,   KC_F5,   KC_F6,  KC_F11,
        _______, _______, _______, _______, _______,    _______,   KC_F1,   KC_F2,   KC_F3,  KC_F12,
-                         _______, _______, _______,    _______, _______
+                         _______, _______, _______,    _______, _______, _______
   ),
 
-  [LAYER_ACTIONS] = MATTHIAS_SPLIT_35(
+  [LAYER_ACTIONS] = MATTHIAS_SPLIT_36(
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______,
        _______, _______, _______, _______, _______,    _______, _______, _______, _______, QK_BOOT,
-                         _______, _______, _______,    _______, _______
+                         _______, _______, _______,    _______, _______, _______
   ),
 
-  [LAYER_FUNCPLUS] = MATTHIAS_SPLIT_35(
+  [LAYER_FUNCPLUS] = MATTHIAS_SPLIT_36(
        _______, _______, _______, _______, _______,    _______,  KC_F21,  KC_F22,  KC_F23, _______,
        _______, _______, _______, _______, _______,    _______,  KC_F18,  KC_F19,  KC_F20, _______,
        _______, _______, _______, _______, _______,    _______,  KC_F15,  KC_F16,  KC_F17, _______,
-                         _______, _______, _______,    _______,  KC_F24
+                         _______, _______, _______,    _______,  KC_F24, _______
   ),
 };
 // clang-format on
